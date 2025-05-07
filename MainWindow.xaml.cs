@@ -29,6 +29,11 @@ namespace NorthvilleLibrary
         {
             InitializeComponent();
 
+            //for testing only
+            StaffWindow staffWindow = new StaffWindow("ST001@northville.edu.ph");
+            staffWindow.Show();
+            this.Close();
+
             //vid for the login
             mediaElement.Source = new Uri(@"D:\Visual Studio\Visual Studio repos\NorthvilleLibrary\assets\portrait.mp4", UriKind.Relative);
             mediaElement.Play();
@@ -38,7 +43,6 @@ namespace NorthvilleLibrary
         {
             mediaElement.Position = TimeSpan.Zero;
             mediaElement.Play();
-
         }
 
         private void login_btn_Click(object sender, RoutedEventArgs e)

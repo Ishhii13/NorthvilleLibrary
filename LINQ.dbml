@@ -10,17 +10,8 @@
       <Column Name="Student_Email" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="Student_Password" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
       <Association Name="Student_Transaction" Member="Transactions" ThisKey="Student_ID" OtherKey="Transaction_Student_ID" Type="Transaction" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Staff" Member="Staffs">
-    <Type Name="Staff">
-      <Column Name="Staff_ID" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="Staff_Surname" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Staff_FirstName" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Staff_Email" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Staff_Contact" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Staff_Password" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Association Name="Staff_Transaction" Member="Transactions" ThisKey="Staff_ID" OtherKey="Transaction_Staff_ID" Type="Transaction" />
+      <Association Name="Student_Visit" Member="Visits" ThisKey="Student_ID" OtherKey="Visit_Student_ID" Type="Visit" />
+      <Association Name="Course_Student" Member="Course" ThisKey="Student_Course_ID" OtherKey="Course_ID" Type="Course" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Book" Member="Books">
@@ -41,9 +32,9 @@
       <Column Name="Transaction_Student_ID" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="Transaction_Borrow_ID" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="Transaction_Staff_ID" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Association Name="Staff_Transaction" Member="Staff" ThisKey="Transaction_Staff_ID" OtherKey="Staff_ID" Type="Staff" IsForeignKey="true" />
       <Association Name="Student_Transaction" Member="Student" ThisKey="Transaction_Student_ID" OtherKey="Student_ID" Type="Student" IsForeignKey="true" />
       <Association Name="Borrow_Transaction" Member="Borrow" ThisKey="Transaction_Borrow_ID" OtherKey="Borrow_ID" Type="Borrow" IsForeignKey="true" />
+      <Association Name="Staff_Transaction" Member="Staff" ThisKey="Transaction_Staff_ID" OtherKey="Staff_ID" Type="Staff" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Borrow" Member="Borrows">
@@ -63,6 +54,34 @@
       <Column Name="Visit_ID" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="Visit_Student_ID" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="Visit_Date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="Student_Visit" Member="Student" ThisKey="Visit_Student_ID" OtherKey="Student_ID" Type="Student" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Course" Member="Courses">
+    <Type Name="Course">
+      <Column Name="Course_ID" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Course_Desc" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Course_Student" Member="Students" ThisKey="Course_ID" OtherKey="Student_Course_ID" Type="Student" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Staff" Member="Staffs">
+    <Type Name="Staff">
+      <Column Name="Staff_ID" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Staff_Surname" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Staff_FirstName" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Staff_Email" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Staff_Contact" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Staff_Password" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Staff_Role_ID" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Staff_Transaction" Member="Transactions" ThisKey="Staff_ID" OtherKey="Transaction_Staff_ID" Type="Transaction" />
+      <Association Name="Role_Staff" Member="Role" ThisKey="Staff_Role_ID" OtherKey="Roles_ID" Type="Role" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Roles" Member="Roles">
+    <Type Name="Role">
+      <Column Name="Roles_ID" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Roles_Description" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Role_Staff" Member="Staffs" ThisKey="Roles_ID" OtherKey="Staff_Role_ID" Type="Staff" />
     </Type>
   </Table>
   <Function Name="dbo.CountVisits" Method="CountVisits">

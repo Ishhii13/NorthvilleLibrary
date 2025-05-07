@@ -31,13 +31,74 @@
                 <Button x:Name="Search" Content="Search" Margin="5,0,5,0" Click="Search_Click"/>
             </StackPanel>
             <Button x:Name="btn_LogOut" Content="Log Out" HorizontalAlignment="Left" Margin="729,26,0,0" VerticalAlignment="Top" Click="btn_LogOut_Click"/>
-            <ListBox x:Name="lbx_AllStudents" Margin="10,145,323,71" SelectionChanged="lbx_AllStudents_SelectionChanged"/>
+            <ListBox x:Name="lbx_AllStudents" Margin="10,145,323,71" SelectionChanged="lbx_SelectionChanged"/>
             <Button x:Name="Edit" Content="Edit" HorizontalAlignment="Left" Margin="464,105,0,0" VerticalAlignment="Top" Width="96" Click="Edit_Click"/>
             <Button x:Name="Add" Content="Add" HorizontalAlignment="Left" Margin="464,80,0,0" VerticalAlignment="Top" Width="96" Click="Add_Click" Height="20"/>
             <Button x:Name="Delete" Content="Delete" HorizontalAlignment="Left" Margin="464,130,0,0" VerticalAlignment="Top" Width="96" Click="Delete_Click" Height="20"/>
         </Grid>
         <Rectangle HorizontalAlignment="Left" Height="440" VerticalAlignment="Top" Width="207" Fill="#FF989898"/>
 
+        <Grid x:Name="grid_Books" Height="450" Width="593" Margin="207,-18,0,18" Visibility="Hidden">
+            <StackPanel Margin="296,66,149,50" Orientation="Vertical" Background="Silver" RenderTransformOrigin="0.5,0.5">
+                <Label Content="Book_ID" HorizontalAlignment="Center"/>
+                <TextBox x:Name="tbx_Book_ID" TextWrapping="Wrap" Text="" Width="120"/>
+                <Label Content="Book Name" HorizontalAlignment="Center"/>
+                <TextBox x:Name="tbx_Book" TextWrapping="Wrap" Text="" Width="120"/>
+                <Label Content="Book Author" HorizontalAlignment="Center"/>
+                <TextBox x:Name="tbx_Book_Author" TextWrapping="Wrap" Text="" Width="120"/>
+                <Label Content="Book ISBN" HorizontalAlignment="Center"/>
+                <TextBox x:Name="tbx_Book_ISBN" TextWrapping="Wrap" Text="" Width="120"/>
+                <Label Content="Book Publication Date" HorizontalAlignment="Center"/>
+                <TextBox x:Name="tbx_Book_Publication_Date" TextWrapping="Wrap" Text="" Width="120"/>
+                <Label Content="Book Genre" HorizontalAlignment="Center"/>
+                <TextBox x:Name="tbx_Book_Genre" TextWrapping="Wrap" Text="" Width="120"/>
+                <Label Content="Book_Copies" HorizontalAlignment="Center"/>
+                <TextBox x:Name="tbx_Book_Copies" TextWrapping="Wrap" Text="" Width="120"/>
+            </StackPanel>
+            <StackPanel Margin="10,79,323,341" Orientation="Horizontal" Background="Silver" Height="30">
+                <Label Content="Book ID: "/>
+                <TextBox x:Name="tbx_Search_Book_ID" TextWrapping="Wrap" Text="" Width="120"/>
+                <Button x:Name="btn_Search_Book" Content="Search" Margin="5,0,5,0" Click="Search_Click"/>
+            </StackPanel>
+            <Button x:Name="btn_LogOut_Book" Content="Log Out" HorizontalAlignment="Left" Margin="729,26,0,0" VerticalAlignment="Top" Click="btn_LogOut_Click"/>
+            <ListBox x:Name="lbx_AllBooks" Margin="10,145,323,71" SelectionChanged="lbx_SelectionChanged"/>
+            <Button x:Name="btn_Edit_Book" Content="Edit" HorizontalAlignment="Left" Margin="464,105,0,0" VerticalAlignment="Top" Width="96" Click="Edit_Click"/>
+            <Button x:Name="btn_Add_Book" Content="Add" HorizontalAlignment="Left" Margin="464,80,0,0" VerticalAlignment="Top" Width="96" Click="Add_Click" Height="20"/>
+            <Button x:Name="btn_Delete_Book" Content="Delete" HorizontalAlignment="Left" Margin="464,130,0,0" VerticalAlignment="Top" Width="96" Click="Delete_Click" Height="20"/>
+        </Grid>
 
+        <Grid x:Name="grid_Transaction_Borrow" Height="450" Width="593" Margin="207,-18,0,18" Visibility="Hidden">
+            <StackPanel Margin="296,66,149,19" Orientation="Vertical" Background="Silver" RenderTransformOrigin="0.5,0.5">
+                <Label Content="Borrow_ID" HorizontalAlignment="Center"/>
+                <TextBox x:Name="tbx_Borrow_ID" TextWrapping="Wrap" Text="" Width="120"/>
+                <Label Content="Book ID" HorizontalAlignment="Center"/>
+                <TextBox x:Name="tbx_Borrow_Book_ID" TextWrapping="Wrap" Text="" Width="120"/>
+                <Label Content="Borrow Date" HorizontalAlignment="Center"/>
+                <TextBox x:Name="tbx_Borrow_Date" TextWrapping="Wrap" Text="" Width="120"/>
+                <Label Content="Due Date" HorizontalAlignment="Center"/>
+                <TextBox x:Name="tbx_Borrow_Due_Date" TextWrapping="Wrap" Text="" Width="120"/>
+                <Label Content="Return Date" HorizontalAlignment="Center"/>
+                <TextBox x:Name="tbx_Borrow_Return_Date" TextWrapping="Wrap" Text="" Width="120"/>
+                <Label Content="Borrow Fee" HorizontalAlignment="Center"/>
+                <TextBox x:Name="tbx_Borrow_Fee" TextWrapping="Wrap" Text="" Width="120"/>
+                <Label Content="Transaction ID" HorizontalAlignment="Center"/>
+                <TextBox x:Name="tbx_Transaction_ID" TextWrapping="Wrap" Text="" Width="120"/>
+                <Label Content="Student ID" HorizontalAlignment="Center"/>
+                <TextBox x:Name="tbx_Transaction_Student_ID" TextWrapping="Wrap" Text="" Width="120"/>
+            </StackPanel>
+            <StackPanel Margin="10,79,323,341" Orientation="Horizontal" Background="Silver" Height="30">
+                <Label Content="Transaction ID: "/>
+                <TextBox x:Name="tbx_Search_Transaction_ID" TextWrapping="Wrap" Text="" Width="120"/>
+                <Button x:Name="btn_Search_Transaction" Content="Search" Margin="5,0,5,0" Click="Search_Click"/>
+            </StackPanel>
+            <Button x:Name="btn_LogOut_Transaction" Content="Log Out" HorizontalAlignment="Left" Margin="729,26,0,0" VerticalAlignment="Top" Click="btn_LogOut_Click"/>
+            <ListBox x:Name="lbx_AllTransaction" Margin="10,145,323,71" SelectionChanged="lbx_SelectionChanged"/>
+            <Button x:Name="btn_Edit_Transaction" Content="Edit" HorizontalAlignment="Left" Margin="464,105,0,0" VerticalAlignment="Top" Width="96" Click="Edit_Click"/>
+            <Button x:Name="btn_Add_Transaction" Content="Add" HorizontalAlignment="Left" Margin="464,80,0,0" VerticalAlignment="Top" Width="96" Click="Add_Click" Height="20"/>
+            <Button x:Name="btn_Delete_Transaction" Content="Delete" HorizontalAlignment="Left" Margin="464,130,0,0" VerticalAlignment="Top" Width="96" Click="Delete_Click" Height="20"/>
+        </Grid>
+        <Button x:Name="btn_Student_Grid" Content="Students" HorizontalAlignment="Left" Margin="137,28,0,0" VerticalAlignment="Top" Click="btn_Student_Grid_Click"/>
+        <Button x:Name="btn_Book_Grid" Content="Books" HorizontalAlignment="Left" Margin="137,67,0,0" VerticalAlignment="Top" Click="btn_Book_Grid_Click"/>
+        <Button x:Name="btn_Transaction_Borrow_Grid" Content="Transactions" HorizontalAlignment="Left" Margin="121,111,0,0" VerticalAlignment="Top" Click="btn_Transaction_Borrow_Grid_Click"/>
     </Grid>
 </Window>

@@ -7,7 +7,15 @@
         mc:Ignorable="d"
         Title="StudentWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen">
     <Grid>
-        <Label x:Name="lbl_Name" Content="Name" HorizontalAlignment="Left" Margin="283,200,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lbl_Name" Content="Name" HorizontalAlignment="Left" Margin="212,10,0,0" VerticalAlignment="Top"/>
+        <Rectangle HorizontalAlignment="Left" Height="440" VerticalAlignment="Top" Width="207" Fill="#FF989898"/>
+        <Grid x:Name="grid_Books" Margin="207,0,0,0">
+            <DataGrid x:Name="dg_BookInfo" Margin="10,122,29,197"/>
+
+        </Grid>
+        <Grid x:Name="grid_Transactions" Margin="207,0,0,0" Visibility="Collapsed">
+
+        </Grid>
 
     </Grid>
 </Window>
