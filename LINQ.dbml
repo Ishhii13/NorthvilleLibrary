@@ -21,4 +21,17 @@
       <Column Name="Staff_Password" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
+  <Function Name="dbo.CountVisits" Method="CountVisits">
+    <Parameter Name="Start_Date" Parameter="start_Date" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="End_Date" Parameter="end_Date" Type="System.DateTime" DbType="Date" />
+    <ElementType Name="CountVisitsResult">
+      <Column Name="Total_Visits" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.MostBorrowedBooks" Method="MostBorrowedBooks">
+    <ElementType Name="MostBorrowedBooksResult">
+      <Column Name="[Book Name]" Member="Book_Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Total" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
 </Database>

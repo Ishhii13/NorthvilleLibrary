@@ -83,6 +83,20 @@ namespace NorthvilleLibrary
 				return this.GetTable<Staff>();
 			}
 		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.CountVisits")]
+		public ISingleResult<CountVisitsResult> CountVisits([global::System.Data.Linq.Mapping.ParameterAttribute(Name="Start_Date", DbType="Date")] System.Nullable<System.DateTime> start_Date, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="End_Date", DbType="Date")] System.Nullable<System.DateTime> end_Date)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), start_Date, end_Date);
+			return ((ISingleResult<CountVisitsResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.MostBorrowedBooks")]
+		public ISingleResult<MostBorrowedBooksResult> MostBorrowedBooks()
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
+			return ((ISingleResult<MostBorrowedBooksResult>)(result.ReturnValue));
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Student")]
@@ -469,6 +483,76 @@ namespace NorthvilleLibrary
 			if ((this.PropertyChanged != null))
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	public partial class CountVisitsResult
+	{
+		
+		private System.Nullable<int> _Total_Visits;
+		
+		public CountVisitsResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Total_Visits", DbType="Int")]
+		public System.Nullable<int> Total_Visits
+		{
+			get
+			{
+				return this._Total_Visits;
+			}
+			set
+			{
+				if ((this._Total_Visits != value))
+				{
+					this._Total_Visits = value;
+				}
+			}
+		}
+	}
+	
+	public partial class MostBorrowedBooksResult
+	{
+		
+		private string _Book_Name;
+		
+		private System.Nullable<int> _Total;
+		
+		public MostBorrowedBooksResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Book Name]", Storage="_Book_Name", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string Book_Name
+		{
+			get
+			{
+				return this._Book_Name;
+			}
+			set
+			{
+				if ((this._Book_Name != value))
+				{
+					this._Book_Name = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Total", DbType="Int")]
+		public System.Nullable<int> Total
+		{
+			get
+			{
+				return this._Total;
+			}
+			set
+			{
+				if ((this._Total != value))
+				{
+					this._Total = value;
+				}
 			}
 		}
 	}

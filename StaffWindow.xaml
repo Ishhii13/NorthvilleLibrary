@@ -9,7 +9,7 @@
     <Grid>
         <Label x:Name="lbl_Name" Content="Staff" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
 
-        <StackPanel Margin="596,60,63,36" Orientation="Vertical" Background="Silver">
+        <StackPanel Margin="502,23,157,93" Orientation="Vertical" Background="Silver">
             <Label Content="Student_ID" HorizontalAlignment="Center"/>
             <TextBox x:Name="tbx_Student_ID" TextWrapping="Wrap" Text="" Width="120"/>
             <Label Content="Student_Surname" HorizontalAlignment="Center"/>
@@ -24,13 +24,18 @@
             <TextBox x:Name="tbx_Student_Email" TextWrapping="Wrap" Text="" Width="120"/>
             <Label Content="Student_Password" HorizontalAlignment="Center"/>
             <TextBox x:Name="tbx_Student_Password" TextWrapping="Wrap" Text="" Width="120"/>
-            <Button x:Name="Edit" Content="Edit" Margin="5,5,5,5" Click="Edit_Click"/>
         </StackPanel>
-        <StackPanel Margin="83,60,459,344" Orientation="Horizontal" Background="Silver">
+        <StackPanel Margin="206,53,336,352" Orientation="Horizontal" Background="Silver" Height="30">
             <Label Content="Student ID: "/>
-            <TextBox x:Name="tbx_Search_Student_ID" TextWrapping="Wrap" Text="" Width="120" TextChanged="tbx_Search_Student_ID_TextChanged"/>
+            <TextBox x:Name="tbx_Search_Student_ID" TextWrapping="Wrap" Text="" Width="120"/>
             <Button x:Name="Search" Content="Search" Margin="5,0,5,0" Click="Search_Click"/>
         </StackPanel>
+        <Button x:Name="btn_LogOut" Content="Log Out" HorizontalAlignment="Left" Margin="27,404,0,0" VerticalAlignment="Top" Click="btn_LogOut_Click"/>
+        <ListBox x:Name="lbx_AllStudents" Margin="206,108,336,108" SelectionChanged="lbx_AllStudents_SelectionChanged"/>
+        <Button x:Name="Edit" Content="Edit" HorizontalAlignment="Left" Margin="648,114,21,300" VerticalAlignment="Top" Width="131" Click="Edit_Click"/>
+        <Button x:Name="Add" Content="Add" HorizontalAlignment="Left" Margin="648,89,0,0" VerticalAlignment="Top" Width="131" Click="Add_Click" Height="19.96"/>
+        <Button x:Name="Delete" Content="Delete" HorizontalAlignment="Left" Margin="648,139,0,0" VerticalAlignment="Top" Width="131" Click="Delete_Click" Height="19.96"/>
+        <Label x:Name="lbl_Visits" Content="Total Visits: " Margin="81,252,632,152"/>
 
 
     </Grid>
