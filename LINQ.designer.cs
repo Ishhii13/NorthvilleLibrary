@@ -36,6 +36,18 @@ namespace NorthvilleLibrary
     partial void InsertStaff(Staff instance);
     partial void UpdateStaff(Staff instance);
     partial void DeleteStaff(Staff instance);
+    partial void InsertBook(Book instance);
+    partial void UpdateBook(Book instance);
+    partial void DeleteBook(Book instance);
+    partial void InsertTransaction(Transaction instance);
+    partial void UpdateTransaction(Transaction instance);
+    partial void DeleteTransaction(Transaction instance);
+    partial void InsertBorrow(Borrow instance);
+    partial void UpdateBorrow(Borrow instance);
+    partial void DeleteBorrow(Borrow instance);
+    partial void InsertVisit(Visit instance);
+    partial void UpdateVisit(Visit instance);
+    partial void DeleteVisit(Visit instance);
     #endregion
 		
 		public LINQDataContext() : 
@@ -84,6 +96,38 @@ namespace NorthvilleLibrary
 			}
 		}
 		
+		public System.Data.Linq.Table<Book> Books
+		{
+			get
+			{
+				return this.GetTable<Book>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Transaction> Transactions
+		{
+			get
+			{
+				return this.GetTable<Transaction>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Borrow> Borrows
+		{
+			get
+			{
+				return this.GetTable<Borrow>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Visit> Visits
+		{
+			get
+			{
+				return this.GetTable<Visit>();
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.CountVisits")]
 		public ISingleResult<CountVisitsResult> CountVisits([global::System.Data.Linq.Mapping.ParameterAttribute(Name="Start_Date", DbType="Date")] System.Nullable<System.DateTime> start_Date, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="End_Date", DbType="Date")] System.Nullable<System.DateTime> end_Date)
 		{
@@ -119,6 +163,8 @@ namespace NorthvilleLibrary
 		
 		private string _Student_Password;
 		
+		private EntitySet<Transaction> _Transactions;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -141,6 +187,7 @@ namespace NorthvilleLibrary
 		
 		public Student()
 		{
+			this._Transactions = new EntitySet<Transaction>(new Action<Transaction>(this.attach_Transactions), new Action<Transaction>(this.detach_Transactions));
 			OnCreated();
 		}
 		
@@ -284,6 +331,19 @@ namespace NorthvilleLibrary
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Student_Transaction", Storage="_Transactions", ThisKey="Student_ID", OtherKey="Transaction_Student_ID")]
+		public EntitySet<Transaction> Transactions
+		{
+			get
+			{
+				return this._Transactions;
+			}
+			set
+			{
+				this._Transactions.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -302,6 +362,18 @@ namespace NorthvilleLibrary
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+		
+		private void attach_Transactions(Transaction entity)
+		{
+			this.SendPropertyChanging();
+			entity.Student = this;
+		}
+		
+		private void detach_Transactions(Transaction entity)
+		{
+			this.SendPropertyChanging();
+			entity.Student = null;
 		}
 	}
 	
@@ -323,6 +395,8 @@ namespace NorthvilleLibrary
 		
 		private string _Staff_Password;
 		
+		private EntitySet<Transaction> _Transactions;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -343,6 +417,7 @@ namespace NorthvilleLibrary
 		
 		public Staff()
 		{
+			this._Transactions = new EntitySet<Transaction>(new Action<Transaction>(this.attach_Transactions), new Action<Transaction>(this.detach_Transactions));
 			OnCreated();
 		}
 		
@@ -462,6 +537,883 @@ namespace NorthvilleLibrary
 					this._Staff_Password = value;
 					this.SendPropertyChanged("Staff_Password");
 					this.OnStaff_PasswordChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Staff_Transaction", Storage="_Transactions", ThisKey="Staff_ID", OtherKey="Transaction_Staff_ID")]
+		public EntitySet<Transaction> Transactions
+		{
+			get
+			{
+				return this._Transactions;
+			}
+			set
+			{
+				this._Transactions.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Transactions(Transaction entity)
+		{
+			this.SendPropertyChanging();
+			entity.Staff = this;
+		}
+		
+		private void detach_Transactions(Transaction entity)
+		{
+			this.SendPropertyChanging();
+			entity.Staff = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Book")]
+	public partial class Book : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private string _Book_ID;
+		
+		private string _Book_Title;
+		
+		private string _Book_Author;
+		
+		private string _Book_ISBN;
+		
+		private System.DateTime _Book_Publication_Date;
+		
+		private string _Book_Genre;
+		
+		private int _Book_Copies;
+		
+		private EntitySet<Borrow> _Borrows;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnBook_IDChanging(string value);
+    partial void OnBook_IDChanged();
+    partial void OnBook_TitleChanging(string value);
+    partial void OnBook_TitleChanged();
+    partial void OnBook_AuthorChanging(string value);
+    partial void OnBook_AuthorChanged();
+    partial void OnBook_ISBNChanging(string value);
+    partial void OnBook_ISBNChanged();
+    partial void OnBook_Publication_DateChanging(System.DateTime value);
+    partial void OnBook_Publication_DateChanged();
+    partial void OnBook_GenreChanging(string value);
+    partial void OnBook_GenreChanged();
+    partial void OnBook_CopiesChanging(int value);
+    partial void OnBook_CopiesChanged();
+    #endregion
+		
+		public Book()
+		{
+			this._Borrows = new EntitySet<Borrow>(new Action<Borrow>(this.attach_Borrows), new Action<Borrow>(this.detach_Borrows));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Book_ID", DbType="VarChar(50) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string Book_ID
+		{
+			get
+			{
+				return this._Book_ID;
+			}
+			set
+			{
+				if ((this._Book_ID != value))
+				{
+					this.OnBook_IDChanging(value);
+					this.SendPropertyChanging();
+					this._Book_ID = value;
+					this.SendPropertyChanged("Book_ID");
+					this.OnBook_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Book_Title", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string Book_Title
+		{
+			get
+			{
+				return this._Book_Title;
+			}
+			set
+			{
+				if ((this._Book_Title != value))
+				{
+					this.OnBook_TitleChanging(value);
+					this.SendPropertyChanging();
+					this._Book_Title = value;
+					this.SendPropertyChanged("Book_Title");
+					this.OnBook_TitleChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Book_Author", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string Book_Author
+		{
+			get
+			{
+				return this._Book_Author;
+			}
+			set
+			{
+				if ((this._Book_Author != value))
+				{
+					this.OnBook_AuthorChanging(value);
+					this.SendPropertyChanging();
+					this._Book_Author = value;
+					this.SendPropertyChanged("Book_Author");
+					this.OnBook_AuthorChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Book_ISBN", DbType="VarChar(50)")]
+		public string Book_ISBN
+		{
+			get
+			{
+				return this._Book_ISBN;
+			}
+			set
+			{
+				if ((this._Book_ISBN != value))
+				{
+					this.OnBook_ISBNChanging(value);
+					this.SendPropertyChanging();
+					this._Book_ISBN = value;
+					this.SendPropertyChanged("Book_ISBN");
+					this.OnBook_ISBNChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Book_Publication_Date", DbType="Date NOT NULL")]
+		public System.DateTime Book_Publication_Date
+		{
+			get
+			{
+				return this._Book_Publication_Date;
+			}
+			set
+			{
+				if ((this._Book_Publication_Date != value))
+				{
+					this.OnBook_Publication_DateChanging(value);
+					this.SendPropertyChanging();
+					this._Book_Publication_Date = value;
+					this.SendPropertyChanged("Book_Publication_Date");
+					this.OnBook_Publication_DateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Book_Genre", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string Book_Genre
+		{
+			get
+			{
+				return this._Book_Genre;
+			}
+			set
+			{
+				if ((this._Book_Genre != value))
+				{
+					this.OnBook_GenreChanging(value);
+					this.SendPropertyChanging();
+					this._Book_Genre = value;
+					this.SendPropertyChanged("Book_Genre");
+					this.OnBook_GenreChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Book_Copies", DbType="Int NOT NULL")]
+		public int Book_Copies
+		{
+			get
+			{
+				return this._Book_Copies;
+			}
+			set
+			{
+				if ((this._Book_Copies != value))
+				{
+					this.OnBook_CopiesChanging(value);
+					this.SendPropertyChanging();
+					this._Book_Copies = value;
+					this.SendPropertyChanged("Book_Copies");
+					this.OnBook_CopiesChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Book_Borrow", Storage="_Borrows", ThisKey="Book_ID", OtherKey="Borrow_Book_ID")]
+		public EntitySet<Borrow> Borrows
+		{
+			get
+			{
+				return this._Borrows;
+			}
+			set
+			{
+				this._Borrows.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Borrows(Borrow entity)
+		{
+			this.SendPropertyChanging();
+			entity.Book = this;
+		}
+		
+		private void detach_Borrows(Borrow entity)
+		{
+			this.SendPropertyChanging();
+			entity.Book = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Transactions")]
+	public partial class Transaction : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private string _Transaction_ID;
+		
+		private string _Transaction_Student_ID;
+		
+		private string _Transaction_Borrow_ID;
+		
+		private string _Transaction_Staff_ID;
+		
+		private EntityRef<Staff> _Staff;
+		
+		private EntityRef<Student> _Student;
+		
+		private EntityRef<Borrow> _Borrow;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnTransaction_IDChanging(string value);
+    partial void OnTransaction_IDChanged();
+    partial void OnTransaction_Student_IDChanging(string value);
+    partial void OnTransaction_Student_IDChanged();
+    partial void OnTransaction_Borrow_IDChanging(string value);
+    partial void OnTransaction_Borrow_IDChanged();
+    partial void OnTransaction_Staff_IDChanging(string value);
+    partial void OnTransaction_Staff_IDChanged();
+    #endregion
+		
+		public Transaction()
+		{
+			this._Staff = default(EntityRef<Staff>);
+			this._Student = default(EntityRef<Student>);
+			this._Borrow = default(EntityRef<Borrow>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Transaction_ID", DbType="VarChar(50) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string Transaction_ID
+		{
+			get
+			{
+				return this._Transaction_ID;
+			}
+			set
+			{
+				if ((this._Transaction_ID != value))
+				{
+					this.OnTransaction_IDChanging(value);
+					this.SendPropertyChanging();
+					this._Transaction_ID = value;
+					this.SendPropertyChanged("Transaction_ID");
+					this.OnTransaction_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Transaction_Student_ID", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string Transaction_Student_ID
+		{
+			get
+			{
+				return this._Transaction_Student_ID;
+			}
+			set
+			{
+				if ((this._Transaction_Student_ID != value))
+				{
+					if (this._Student.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnTransaction_Student_IDChanging(value);
+					this.SendPropertyChanging();
+					this._Transaction_Student_ID = value;
+					this.SendPropertyChanged("Transaction_Student_ID");
+					this.OnTransaction_Student_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Transaction_Borrow_ID", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string Transaction_Borrow_ID
+		{
+			get
+			{
+				return this._Transaction_Borrow_ID;
+			}
+			set
+			{
+				if ((this._Transaction_Borrow_ID != value))
+				{
+					if (this._Borrow.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnTransaction_Borrow_IDChanging(value);
+					this.SendPropertyChanging();
+					this._Transaction_Borrow_ID = value;
+					this.SendPropertyChanged("Transaction_Borrow_ID");
+					this.OnTransaction_Borrow_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Transaction_Staff_ID", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string Transaction_Staff_ID
+		{
+			get
+			{
+				return this._Transaction_Staff_ID;
+			}
+			set
+			{
+				if ((this._Transaction_Staff_ID != value))
+				{
+					if (this._Staff.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnTransaction_Staff_IDChanging(value);
+					this.SendPropertyChanging();
+					this._Transaction_Staff_ID = value;
+					this.SendPropertyChanged("Transaction_Staff_ID");
+					this.OnTransaction_Staff_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Staff_Transaction", Storage="_Staff", ThisKey="Transaction_Staff_ID", OtherKey="Staff_ID", IsForeignKey=true)]
+		public Staff Staff
+		{
+			get
+			{
+				return this._Staff.Entity;
+			}
+			set
+			{
+				Staff previousValue = this._Staff.Entity;
+				if (((previousValue != value) 
+							|| (this._Staff.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Staff.Entity = null;
+						previousValue.Transactions.Remove(this);
+					}
+					this._Staff.Entity = value;
+					if ((value != null))
+					{
+						value.Transactions.Add(this);
+						this._Transaction_Staff_ID = value.Staff_ID;
+					}
+					else
+					{
+						this._Transaction_Staff_ID = default(string);
+					}
+					this.SendPropertyChanged("Staff");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Student_Transaction", Storage="_Student", ThisKey="Transaction_Student_ID", OtherKey="Student_ID", IsForeignKey=true)]
+		public Student Student
+		{
+			get
+			{
+				return this._Student.Entity;
+			}
+			set
+			{
+				Student previousValue = this._Student.Entity;
+				if (((previousValue != value) 
+							|| (this._Student.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Student.Entity = null;
+						previousValue.Transactions.Remove(this);
+					}
+					this._Student.Entity = value;
+					if ((value != null))
+					{
+						value.Transactions.Add(this);
+						this._Transaction_Student_ID = value.Student_ID;
+					}
+					else
+					{
+						this._Transaction_Student_ID = default(string);
+					}
+					this.SendPropertyChanged("Student");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Borrow_Transaction", Storage="_Borrow", ThisKey="Transaction_Borrow_ID", OtherKey="Borrow_ID", IsForeignKey=true)]
+		public Borrow Borrow
+		{
+			get
+			{
+				return this._Borrow.Entity;
+			}
+			set
+			{
+				Borrow previousValue = this._Borrow.Entity;
+				if (((previousValue != value) 
+							|| (this._Borrow.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Borrow.Entity = null;
+						previousValue.Transactions.Remove(this);
+					}
+					this._Borrow.Entity = value;
+					if ((value != null))
+					{
+						value.Transactions.Add(this);
+						this._Transaction_Borrow_ID = value.Borrow_ID;
+					}
+					else
+					{
+						this._Transaction_Borrow_ID = default(string);
+					}
+					this.SendPropertyChanged("Borrow");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Borrow")]
+	public partial class Borrow : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private string _Borrow_ID;
+		
+		private string _Borrow_Book_ID;
+		
+		private System.DateTime _Borrow_Date;
+		
+		private System.DateTime _Borrow_Due_Date;
+		
+		private System.Nullable<System.DateTime> _Borrow_Return_Date;
+		
+		private int _Borrow_Fee;
+		
+		private EntitySet<Transaction> _Transactions;
+		
+		private EntityRef<Book> _Book;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnBorrow_IDChanging(string value);
+    partial void OnBorrow_IDChanged();
+    partial void OnBorrow_Book_IDChanging(string value);
+    partial void OnBorrow_Book_IDChanged();
+    partial void OnBorrow_DateChanging(System.DateTime value);
+    partial void OnBorrow_DateChanged();
+    partial void OnBorrow_Due_DateChanging(System.DateTime value);
+    partial void OnBorrow_Due_DateChanged();
+    partial void OnBorrow_Return_DateChanging(System.Nullable<System.DateTime> value);
+    partial void OnBorrow_Return_DateChanged();
+    partial void OnBorrow_FeeChanging(int value);
+    partial void OnBorrow_FeeChanged();
+    #endregion
+		
+		public Borrow()
+		{
+			this._Transactions = new EntitySet<Transaction>(new Action<Transaction>(this.attach_Transactions), new Action<Transaction>(this.detach_Transactions));
+			this._Book = default(EntityRef<Book>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Borrow_ID", DbType="VarChar(50) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string Borrow_ID
+		{
+			get
+			{
+				return this._Borrow_ID;
+			}
+			set
+			{
+				if ((this._Borrow_ID != value))
+				{
+					this.OnBorrow_IDChanging(value);
+					this.SendPropertyChanging();
+					this._Borrow_ID = value;
+					this.SendPropertyChanged("Borrow_ID");
+					this.OnBorrow_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Borrow_Book_ID", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string Borrow_Book_ID
+		{
+			get
+			{
+				return this._Borrow_Book_ID;
+			}
+			set
+			{
+				if ((this._Borrow_Book_ID != value))
+				{
+					if (this._Book.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnBorrow_Book_IDChanging(value);
+					this.SendPropertyChanging();
+					this._Borrow_Book_ID = value;
+					this.SendPropertyChanged("Borrow_Book_ID");
+					this.OnBorrow_Book_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Borrow_Date", DbType="Date NOT NULL")]
+		public System.DateTime Borrow_Date
+		{
+			get
+			{
+				return this._Borrow_Date;
+			}
+			set
+			{
+				if ((this._Borrow_Date != value))
+				{
+					this.OnBorrow_DateChanging(value);
+					this.SendPropertyChanging();
+					this._Borrow_Date = value;
+					this.SendPropertyChanged("Borrow_Date");
+					this.OnBorrow_DateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Borrow_Due_Date", DbType="Date NOT NULL")]
+		public System.DateTime Borrow_Due_Date
+		{
+			get
+			{
+				return this._Borrow_Due_Date;
+			}
+			set
+			{
+				if ((this._Borrow_Due_Date != value))
+				{
+					this.OnBorrow_Due_DateChanging(value);
+					this.SendPropertyChanging();
+					this._Borrow_Due_Date = value;
+					this.SendPropertyChanged("Borrow_Due_Date");
+					this.OnBorrow_Due_DateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Borrow_Return_Date", DbType="Date")]
+		public System.Nullable<System.DateTime> Borrow_Return_Date
+		{
+			get
+			{
+				return this._Borrow_Return_Date;
+			}
+			set
+			{
+				if ((this._Borrow_Return_Date != value))
+				{
+					this.OnBorrow_Return_DateChanging(value);
+					this.SendPropertyChanging();
+					this._Borrow_Return_Date = value;
+					this.SendPropertyChanged("Borrow_Return_Date");
+					this.OnBorrow_Return_DateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Borrow_Fee", DbType="Int NOT NULL")]
+		public int Borrow_Fee
+		{
+			get
+			{
+				return this._Borrow_Fee;
+			}
+			set
+			{
+				if ((this._Borrow_Fee != value))
+				{
+					this.OnBorrow_FeeChanging(value);
+					this.SendPropertyChanging();
+					this._Borrow_Fee = value;
+					this.SendPropertyChanged("Borrow_Fee");
+					this.OnBorrow_FeeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Borrow_Transaction", Storage="_Transactions", ThisKey="Borrow_ID", OtherKey="Transaction_Borrow_ID")]
+		public EntitySet<Transaction> Transactions
+		{
+			get
+			{
+				return this._Transactions;
+			}
+			set
+			{
+				this._Transactions.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Book_Borrow", Storage="_Book", ThisKey="Borrow_Book_ID", OtherKey="Book_ID", IsForeignKey=true)]
+		public Book Book
+		{
+			get
+			{
+				return this._Book.Entity;
+			}
+			set
+			{
+				Book previousValue = this._Book.Entity;
+				if (((previousValue != value) 
+							|| (this._Book.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Book.Entity = null;
+						previousValue.Borrows.Remove(this);
+					}
+					this._Book.Entity = value;
+					if ((value != null))
+					{
+						value.Borrows.Add(this);
+						this._Borrow_Book_ID = value.Book_ID;
+					}
+					else
+					{
+						this._Borrow_Book_ID = default(string);
+					}
+					this.SendPropertyChanged("Book");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Transactions(Transaction entity)
+		{
+			this.SendPropertyChanging();
+			entity.Borrow = this;
+		}
+		
+		private void detach_Transactions(Transaction entity)
+		{
+			this.SendPropertyChanging();
+			entity.Borrow = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Visit")]
+	public partial class Visit : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private string _Visit_ID;
+		
+		private string _Visit_Student_ID;
+		
+		private System.DateTime _Visit_Date;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnVisit_IDChanging(string value);
+    partial void OnVisit_IDChanged();
+    partial void OnVisit_Student_IDChanging(string value);
+    partial void OnVisit_Student_IDChanged();
+    partial void OnVisit_DateChanging(System.DateTime value);
+    partial void OnVisit_DateChanged();
+    #endregion
+		
+		public Visit()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Visit_ID", DbType="VarChar(50) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string Visit_ID
+		{
+			get
+			{
+				return this._Visit_ID;
+			}
+			set
+			{
+				if ((this._Visit_ID != value))
+				{
+					this.OnVisit_IDChanging(value);
+					this.SendPropertyChanging();
+					this._Visit_ID = value;
+					this.SendPropertyChanged("Visit_ID");
+					this.OnVisit_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Visit_Student_ID", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string Visit_Student_ID
+		{
+			get
+			{
+				return this._Visit_Student_ID;
+			}
+			set
+			{
+				if ((this._Visit_Student_ID != value))
+				{
+					this.OnVisit_Student_IDChanging(value);
+					this.SendPropertyChanging();
+					this._Visit_Student_ID = value;
+					this.SendPropertyChanged("Visit_Student_ID");
+					this.OnVisit_Student_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Visit_Date", DbType="DateTime NOT NULL")]
+		public System.DateTime Visit_Date
+		{
+			get
+			{
+				return this._Visit_Date;
+			}
+			set
+			{
+				if ((this._Visit_Date != value))
+				{
+					this.OnVisit_DateChanging(value);
+					this.SendPropertyChanging();
+					this._Visit_Date = value;
+					this.SendPropertyChanged("Visit_Date");
+					this.OnVisit_DateChanged();
 				}
 			}
 		}

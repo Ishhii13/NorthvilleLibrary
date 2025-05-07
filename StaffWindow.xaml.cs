@@ -29,7 +29,6 @@ namespace NorthvilleLibrary
             staffEmail = email;
             ChangeName();
             PopulateStudentList();
-            //Visits();
         }
 
         private void ChangeName()
@@ -229,12 +228,5 @@ namespace NorthvilleLibrary
             else
                 MessageBox.Show("Please select a student to delete.");
         }
-
-        //private void Visits()
-        //{
-        //    var value = db.CountVisits(DateTime.Parse("2025-03-15"), DateTime.Parse("2025-03-16"));
-        //    value = int.Parse(value);
-        //    lbl_Visits.Content = value.ToString();
-        //}
     }
 }

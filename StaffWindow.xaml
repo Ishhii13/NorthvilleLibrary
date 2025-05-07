@@ -5,37 +5,38 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NorthvilleLibrary"
         mc:Ignorable="d"
-        Title="StaffWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen">
-    <Grid>
-        <Label x:Name="lbl_Name" Content="Staff" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-
-        <StackPanel Margin="502,23,157,93" Orientation="Vertical" Background="Silver">
-            <Label Content="Student_ID" HorizontalAlignment="Center"/>
-            <TextBox x:Name="tbx_Student_ID" TextWrapping="Wrap" Text="" Width="120"/>
-            <Label Content="Student_Surname" HorizontalAlignment="Center"/>
-            <TextBox x:Name="tbx_Student_Surname" TextWrapping="Wrap" Text="" Width="120"/>
-            <Label Content="Student_FirstName" HorizontalAlignment="Center"/>
-            <TextBox x:Name="tbx_Student_FirstName" TextWrapping="Wrap" Text="" Width="120"/>
-            <Label Content="Student_Course_ID" HorizontalAlignment="Center"/>
-            <TextBox x:Name="tbx_Student_Course_ID" TextWrapping="Wrap" Text="" Width="120"/>
-            <Label Content="Student_ContactNo" HorizontalAlignment="Center"/>
-            <TextBox x:Name="tbx_Student_ContactNo" TextWrapping="Wrap" Text="" Width="120"/>
-            <Label Content="Student_Email" HorizontalAlignment="Center"/>
-            <TextBox x:Name="tbx_Student_Email" TextWrapping="Wrap" Text="" Width="120"/>
-            <Label Content="Student_Password" HorizontalAlignment="Center"/>
-            <TextBox x:Name="tbx_Student_Password" TextWrapping="Wrap" Text="" Width="120"/>
-        </StackPanel>
-        <StackPanel Margin="206,53,336,352" Orientation="Horizontal" Background="Silver" Height="30">
-            <Label Content="Student ID: "/>
-            <TextBox x:Name="tbx_Search_Student_ID" TextWrapping="Wrap" Text="" Width="120"/>
-            <Button x:Name="Search" Content="Search" Margin="5,0,5,0" Click="Search_Click"/>
-        </StackPanel>
-        <Button x:Name="btn_LogOut" Content="Log Out" HorizontalAlignment="Left" Margin="27,404,0,0" VerticalAlignment="Top" Click="btn_LogOut_Click"/>
-        <ListBox x:Name="lbx_AllStudents" Margin="206,108,336,108" SelectionChanged="lbx_AllStudents_SelectionChanged"/>
-        <Button x:Name="Edit" Content="Edit" HorizontalAlignment="Left" Margin="648,114,21,300" VerticalAlignment="Top" Width="131" Click="Edit_Click"/>
-        <Button x:Name="Add" Content="Add" HorizontalAlignment="Left" Margin="648,89,0,0" VerticalAlignment="Top" Width="131" Click="Add_Click" Height="19.96"/>
-        <Button x:Name="Delete" Content="Delete" HorizontalAlignment="Left" Margin="648,139,0,0" VerticalAlignment="Top" Width="131" Click="Delete_Click" Height="19.96"/>
-        <Label x:Name="lbl_Visits" Content="Total Visits: " Margin="81,252,632,152"/>
+        Title="StaffWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Grid Height="450" Width="800">
+        <Grid x:Name="grid_Students" Height="450" Width="593" Margin="207,-18,0,18">
+            <Label x:Name="lbl_Name" Content="Staff" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top"/>
+            <StackPanel Margin="296,66,149,50" Orientation="Vertical" Background="Silver" RenderTransformOrigin="0.5,0.5">
+                <Label Content="Student_ID" HorizontalAlignment="Center"/>
+                <TextBox x:Name="tbx_Student_ID" TextWrapping="Wrap" Text="" Width="120"/>
+                <Label Content="Student_Surname" HorizontalAlignment="Center"/>
+                <TextBox x:Name="tbx_Student_Surname" TextWrapping="Wrap" Text="" Width="120"/>
+                <Label Content="Student_FirstName" HorizontalAlignment="Center"/>
+                <TextBox x:Name="tbx_Student_FirstName" TextWrapping="Wrap" Text="" Width="120"/>
+                <Label Content="Student_Course_ID" HorizontalAlignment="Center"/>
+                <TextBox x:Name="tbx_Student_Course_ID" TextWrapping="Wrap" Text="" Width="120"/>
+                <Label Content="Student_ContactNo" HorizontalAlignment="Center"/>
+                <TextBox x:Name="tbx_Student_ContactNo" TextWrapping="Wrap" Text="" Width="120"/>
+                <Label Content="Student_Email" HorizontalAlignment="Center"/>
+                <TextBox x:Name="tbx_Student_Email" TextWrapping="Wrap" Text="" Width="120"/>
+                <Label Content="Student_Password" HorizontalAlignment="Center"/>
+                <TextBox x:Name="tbx_Student_Password" TextWrapping="Wrap" Text="" Width="120"/>
+            </StackPanel>
+            <StackPanel Margin="10,79,323,341" Orientation="Horizontal" Background="Silver" Height="30">
+                <Label Content="Student ID: "/>
+                <TextBox x:Name="tbx_Search_Student_ID" TextWrapping="Wrap" Text="" Width="120"/>
+                <Button x:Name="Search" Content="Search" Margin="5,0,5,0" Click="Search_Click"/>
+            </StackPanel>
+            <Button x:Name="btn_LogOut" Content="Log Out" HorizontalAlignment="Left" Margin="729,26,0,0" VerticalAlignment="Top" Click="btn_LogOut_Click"/>
+            <ListBox x:Name="lbx_AllStudents" Margin="10,145,323,71" SelectionChanged="lbx_AllStudents_SelectionChanged"/>
+            <Button x:Name="Edit" Content="Edit" HorizontalAlignment="Left" Margin="464,105,0,0" VerticalAlignment="Top" Width="96" Click="Edit_Click"/>
+            <Button x:Name="Add" Content="Add" HorizontalAlignment="Left" Margin="464,80,0,0" VerticalAlignment="Top" Width="96" Click="Add_Click" Height="20"/>
+            <Button x:Name="Delete" Content="Delete" HorizontalAlignment="Left" Margin="464,130,0,0" VerticalAlignment="Top" Width="96" Click="Delete_Click" Height="20"/>
+        </Grid>
+        <Rectangle HorizontalAlignment="Left" Height="440" VerticalAlignment="Top" Width="207" Fill="#FF989898"/>
 
 
     </Grid>

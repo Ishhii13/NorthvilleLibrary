@@ -9,6 +9,7 @@
       <Column Name="Student_ContactNo" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="Student_Email" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="Student_Password" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Student_Transaction" Member="Transactions" ThisKey="Student_ID" OtherKey="Transaction_Student_ID" Type="Transaction" />
     </Type>
   </Table>
   <Table Name="dbo.Staff" Member="Staffs">
@@ -19,6 +20,49 @@
       <Column Name="Staff_Email" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="Staff_Contact" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="Staff_Password" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Staff_Transaction" Member="Transactions" ThisKey="Staff_ID" OtherKey="Transaction_Staff_ID" Type="Transaction" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Book" Member="Books">
+    <Type Name="Book">
+      <Column Name="Book_ID" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Book_Title" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Book_Author" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Book_ISBN" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Book_Publication_Date" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="Book_Genre" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Book_Copies" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Book_Borrow" Member="Borrows" ThisKey="Book_ID" OtherKey="Borrow_Book_ID" Type="Borrow" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Transactions" Member="Transactions">
+    <Type Name="Transaction">
+      <Column Name="Transaction_ID" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Transaction_Student_ID" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Transaction_Borrow_ID" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Transaction_Staff_ID" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Staff_Transaction" Member="Staff" ThisKey="Transaction_Staff_ID" OtherKey="Staff_ID" Type="Staff" IsForeignKey="true" />
+      <Association Name="Student_Transaction" Member="Student" ThisKey="Transaction_Student_ID" OtherKey="Student_ID" Type="Student" IsForeignKey="true" />
+      <Association Name="Borrow_Transaction" Member="Borrow" ThisKey="Transaction_Borrow_ID" OtherKey="Borrow_ID" Type="Borrow" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Borrow" Member="Borrows">
+    <Type Name="Borrow">
+      <Column Name="Borrow_ID" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Borrow_Book_ID" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Borrow_Date" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="Borrow_Due_Date" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="Borrow_Return_Date" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Borrow_Fee" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Borrow_Transaction" Member="Transactions" ThisKey="Borrow_ID" OtherKey="Transaction_Borrow_ID" Type="Transaction" />
+      <Association Name="Book_Borrow" Member="Book" ThisKey="Borrow_Book_ID" OtherKey="Book_ID" Type="Book" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Visit" Member="Visits">
+    <Type Name="Visit">
+      <Column Name="Visit_ID" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Visit_Student_ID" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Visit_Date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
   <Function Name="dbo.CountVisits" Method="CountVisits">
