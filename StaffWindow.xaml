@@ -67,8 +67,8 @@
             <Button x:Name="btn_Delete_Book" Content="Delete" HorizontalAlignment="Left" Margin="464,130,0,0" VerticalAlignment="Top" Width="96" Click="Delete_Click" Height="20"/>
         </Grid>
 
-        <Grid x:Name="grid_Transaction_Borrow" Height="450" Width="593" Margin="207,-18,0,18" Visibility="Hidden">
-            <StackPanel Margin="296,66,149,19" Orientation="Vertical" Background="Silver" RenderTransformOrigin="0.5,0.5">
+        <Grid x:Name="grid_Transaction_Borrow" Height="450" Width="593" Margin="207,-18,0,18" Visibility="Visible">
+            <StackPanel Margin="296,43,149,42" Orientation="Vertical" Background="Silver" RenderTransformOrigin="0.5,0.5">
                 <Label Content="Borrow_ID" HorizontalAlignment="Center"/>
                 <TextBox x:Name="tbx_Borrow_ID" TextWrapping="Wrap" Text="" Width="120"/>
                 <Label Content="Book ID" HorizontalAlignment="Center"/>

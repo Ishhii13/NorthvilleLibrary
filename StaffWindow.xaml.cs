@@ -24,6 +24,7 @@ namespace NorthvilleLibrary
         private Student selectedStudent;
         private Book selectedBook;
         private Borrow selectedBorrow;
+        private Transaction selectedTransaction;
         Grid currentGrid;
 
         public StaffWindow(string email)
@@ -53,15 +54,6 @@ namespace NorthvilleLibrary
 
             lbl_Name.Content = $"Welcome back {userName}!";
         }
-
-        //private string GetName()
-        //{
-        //    var user = (from u in db.Staffs
-        //                where u.Staff_Email == staffEmail
-        //                select u).FirstOrDefault();
-
-        //    return user.Staff_FirstName + " " + user.Staff_Surname;
-        //}
 
         private void Search_Click(object sender, RoutedEventArgs e)
         {
@@ -213,18 +205,23 @@ namespace NorthvilleLibrary
                 else
                     MessageBox.Show("Please select a book to edit.");
             }
-            else
+            else //WTF IS HAPPENING HERE
             {
                 if (selectedBorrow != null)
                 {
-                    //selectedBorrow.Borrow_ID = tbx_Borrow_ID.Text;
-                    //selectedBorrow.Book_ID = tbx_Borrow_Book_ID.Text;
-                    //selectedBorrow.Borrow_Date = DateTime.Parse(tbx_Borrow_Date.Text);
-                    //selectedBorrow.Due_Date = DateTime.Parse(tbx_Borrow_Due_Date.Text);
-                    //selectedBorrow.Return_Date = DateTime.Parse(tbx_Borrow_Return_Date.Text);
-                    //selectedBorrow.Borrow_Fee = decimal.Parse(tbx_Borrow_Fee.Text);
-                    //selectedBorrow.Transaction_ID = tbx_Transaction_ID.Text;
-                    //selectedBorrow.Student_ID = tbx_Transaction_Student_ID.Text;
+                    selectedBorrow.Borrow_ID = tbx_Borrow_ID.Text;
+                    selectedBorrow.Borrow_Book_ID = tbx_Borrow_Book_ID.Text;
+                    selectedBorrow.Borrow_Date = DateTime.Parse(tbx_Borrow_Date.Text);
+                    selectedBorrow.Borrow_Due_Date = DateTime.Parse(tbx_Borrow_Due_Date.Text);
+                    selectedBorrow.Borrow_Return_Date = DateTime.Parse(tbx_Borrow_Return_Date.Text);
+                    selectedBorrow.Borrow_Fee = int.Parse(tbx_Borrow_Fee.Text);
+
+                    var transaction = db.Transactions.FirstOrDefault(t => t.Transaction_ID == tbx_Transaction_ID.Text);
+                    if (transaction != null)
+                    {
+                        transaction.Transaction_ID = tbx_Transaction_ID.Text;
+                        transaction.Transaction_Student_ID = tbx_Transaction_Student_ID.Text;
+                    }
 
                     db.SubmitChanges();
 
@@ -281,16 +278,6 @@ namespace NorthvilleLibrary
 
         private void PopulateListBox()
         {
-            //var students = db.Students.ToList();
-            //Dictionary<string, Student> studentNames = new Dictionary<string, Student>();
-            //foreach (var student in students)
-            //{
-            //    string displayName = $"{student.Student_FirstName} {student.Student_Surname}";
-            //    studentNames[displayName] = student;
-            //}
-            //lbx_AllStudents.ItemsSource = studentNames.Keys.ToList();
-            //lbx_AllStudents.Tag = studentNames;
-
             if (currentGrid == grid_Students)
             {
                 var students = db.Students.ToList();
@@ -315,7 +302,7 @@ namespace NorthvilleLibrary
                 lbx_AllBooks.ItemsSource = bookTitles.Keys.ToList();
                 lbx_AllBooks.Tag = bookTitles;
             }
-            else //FIX THIS
+            else //FIX THIS IT'S NOT SHOWING THE RIGHT INFO
             {
                 var borrows = db.Borrows.ToList();
                 var transaction = db.Transactions.ToList();
@@ -337,10 +324,10 @@ namespace NorthvilleLibrary
                 string selectedKey = lbx_AllStudents.SelectedItem as string;
                 if (selectedKey == null) return;
 
-                var studentMap = lbx_AllStudents.Tag as Dictionary<string, Student>;
-                if (studentMap != null && studentMap.ContainsKey(selectedKey))
+                var studentInfo = lbx_AllStudents.Tag as Dictionary<string, Student>;
+                if (studentInfo != null && studentInfo.ContainsKey(selectedKey))
                 {
-                    selectedStudent = studentMap[selectedKey];
+                    selectedStudent = studentInfo[selectedKey];
 
                     tbx_Student_ID.Text = selectedStudent.Student_ID;
                     tbx_Student_Surname.Text = selectedStudent.Student_Surname;
@@ -356,10 +343,10 @@ namespace NorthvilleLibrary
                 string selectedKey = lbx_AllBooks.SelectedItem as string;
                 if (selectedKey == null) return;
 
-                var bookMap = lbx_AllBooks.Tag as Dictionary<string, Book>;
-                if (bookMap != null && bookMap.ContainsKey(selectedKey))
+                var bookInfo = lbx_AllBooks.Tag as Dictionary<string, Book>;
+                if (bookInfo != null && bookInfo.ContainsKey(selectedKey))
                 {
-                    selectedBook = bookMap[selectedKey];
+                    selectedBook = bookInfo[selectedKey];
 
                     tbx_Book_ID.Text = selectedBook.Book_ID;
                     tbx_Book.Text = selectedBook.Book_Title;
@@ -370,23 +357,75 @@ namespace NorthvilleLibrary
                     tbx_Book_Copies.Text = selectedBook.Book_Copies.ToString();
                 }
             }
-            else
+            else //Transaction ID and Student ID aren't showing
             {
-                
+                if (currentGrid == grid_Transaction_Borrow)
+                {
+                    string selectedKey = lbx_AllTransaction.SelectedItem as string;
+                    if (selectedKey == null) return;
+
+                    var borrowInfo = lbx_AllTransaction.Tag as Dictionary<string, Borrow>;
+                    if (borrowInfo != null && borrowInfo.ContainsKey(selectedKey))
+                    {
+                        selectedBorrow = borrowInfo[selectedKey];
+
+                        tbx_Borrow_ID.Text = selectedBorrow.Borrow_ID;
+                        tbx_Borrow_Book_ID.Text = selectedBorrow.Borrow_Book_ID;
+                        tbx_Borrow_Date.Text = selectedBorrow.Borrow_Date.ToString("yyyy-MM-dd");
+                        tbx_Borrow_Due_Date.Text = selectedBorrow.Borrow_Due_Date.ToString("yyyy-MM-dd");
+                        tbx_Borrow_Fee.Text = selectedBorrow.Borrow_Fee.ToString();
+
+                        if (selectedBorrow.Borrow_Return_Date != null)
+                            tbx_Borrow_Return_Date.Text = selectedBorrow.Borrow_Return_Date.ToString();
+                        else
+                            tbx_Borrow_Return_Date.Text = "";
+
+                        var transactionInfo = db.Transactions.ToDictionary(t => t.Transaction_ID);
+
+                        var selectedTransaction = transactionInfo.Values
+                                .FirstOrDefault(t => t.Transaction_Borrow_ID == selectedBorrow.Borrow_ID);
+
+                        if (selectedTransaction != null)
+                        {
+                            tbx_Transaction_ID.Text = selectedTransaction.Transaction_ID;
+                            tbx_Transaction_Student_ID.Text = selectedTransaction.Transaction_Student_ID;
+                        }
+                        else //REMOVE THIS LATER ITS FOR TESTING
+                        {
+                            tbx_Transaction_ID.Text = "";
+                            tbx_Transaction_Student_ID.Text = "";
+                        }
+                    }
+                }
             }
         }
 
         private void Add_Click(object sender, RoutedEventArgs e)
         {
-            if ((string)Add.Content == "Add")
+            if ((string)Add.Content == "Add" || (string)btn_Add_Book.Content == "Add" || (string)btn_Add_Transaction.Content == "Add")
             {
-                Add.Content = "Save";
-                Edit.IsEnabled = false;
-                Delete.IsEnabled = false;
+                if (currentGrid == grid_Students)
+                {
+                    Add.Content = "Save";
+                    Edit.IsEnabled = false;
+                    Delete.IsEnabled = false;
+                }
+                else if (currentGrid == grid_Books)
+                {
+                    btn_Add_Book.Content = "Save";
+                    btn_Edit_Book.IsEnabled = false;
+                    btn_Delete_Book.IsEnabled = false;
+                }
+                else
+                {
+                    btn_Add_Transaction.Content = "Save";
+                    btn_Edit_Transaction.IsEnabled = false;
+                    btn_Delete_Transaction.IsEnabled = false;
+                }
 
                 ClearTextboxes();
             }
-            else if ((string)Add.Content == "Save")
+            else if ((string)Add.Content == "Save" || (string)btn_Add_Book.Content == "Save" || (string)btn_Add_Transaction.Content == "Save")
             {
                 if (currentGrid == grid_Students)
                 {
