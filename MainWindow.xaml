@@ -18,7 +18,8 @@
         <Button Content="Login" FontFamily="times new roman" Background="Brown"  BorderBrush="Firebrick" 
     BorderThickness="1"  HorizontalAlignment="Left" Margin="346,256,0,0" VerticalAlignment="Top" Click="login_btn_Click" Height="32" Width="120" Foreground="AntiqueWhite"/>
         <TextBox x:Name = "user_txt"  HorizontalAlignment="Left" Margin="400,155,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" Background="Beige"/>
-        <TextBox x:Name = "pass_txt"  HorizontalAlignment="Left" Margin="400,217,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" Background="Beige"/>
+        <!--<TextBox x:Name = "pass_txt"  HorizontalAlignment="Left" Margin="400,217,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" Background="Beige"/>-->
+        <PasswordBox x:Name = "pass_txt"  HorizontalAlignment="Left" Margin="400,217,0,0" VerticalAlignment="Top" Width="120" Background="Beige"/>
         <Label Content="E-mail" HorizontalAlignment="Left" Margin="289,149,0,0" VerticalAlignment="Top" FontFamily= "times new roman" FontSize="17" Foreground="AntiqueWhite" FontWeight="Bold"/>
         <Label Content="Password" HorizontalAlignment="Left" Margin="289,211,0,0" VerticalAlignment="Top" FontFamily="times new roman" FontSize="17" Foreground="AntiqueWhite" FontWeight="Bold"  />
 

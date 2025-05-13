@@ -23,7 +23,7 @@ namespace NorthvilleLibrary
     public partial class MainWindow : Window
     {
         bool isStudent = true;
-        LINQDataContext db = new LINQDataContext(Properties.Settings.Default.NorthvilleLibraryConnectionString);
+        LINQDataContext db = new LINQDataContext(Properties.Settings.Default.NorthvilleLibraryConnectionString1);
 
         public MainWindow()
         {
@@ -47,7 +47,9 @@ namespace NorthvilleLibrary
 
         private void login_btn_Click(object sender, RoutedEventArgs e)
         {
-            if (user_txt.Text == "" || pass_txt.Text == "") //if textboxes are empty
+            string passwordLogin = pass_txt.Password;
+
+            if (user_txt.Text == "" || passwordLogin == "") //if textboxes are empty
             {
                 MessageBox.Show("Please enter username and password");
                 return;
@@ -124,7 +126,7 @@ namespace NorthvilleLibrary
 
         private int passComparison(string uPass)
         {
-            if (pass_txt.Text == uPass)
+            if (pass_txt.Password == uPass)
             {
                 return 0;
             }

@@ -19,7 +19,7 @@ namespace NorthvilleLibrary
     /// </summary>
     public partial class StaffWindow : Window
     {
-        LINQDataContext db = new LINQDataContext(Properties.Settings.Default.NorthvilleLibraryConnectionString);
+        LINQDataContext db = new LINQDataContext(Properties.Settings.Default.NorthvilleLibraryConnectionString1);
         private string staffEmail;
         private Student selectedStudent;
         private Book selectedBook;

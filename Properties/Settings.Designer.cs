@@ -33,5 +33,16 @@ namespace NorthvilleLibrary.Properties {
                 return ((string)(this["NorthvilleLibraryConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=DESKTOP-UGAI3MR\\SQLEXPRESS03;Initial Catalog=NorthvilleLibrary;Integr" +
+            "ated Security=True;Encrypt=True;TrustServerCertificate=True")]
+        public string NorthvilleLibraryConnectionString1 {
+            get {
+                return ((string)(this["NorthvilleLibraryConnectionString1"]));
+            }
+        }
     }
 }

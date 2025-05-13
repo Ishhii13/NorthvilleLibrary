@@ -9,13 +9,21 @@
     <Grid>
         <Label x:Name="lbl_Name" Content="Name" HorizontalAlignment="Left" Margin="212,10,0,0" VerticalAlignment="Top"/>
         <Rectangle HorizontalAlignment="Left" Height="440" VerticalAlignment="Top" Width="207" Fill="#FF989898"/>
-        <Grid x:Name="grid_Books" Margin="207,0,0,0">
-            <DataGrid x:Name="dg_BookInfo" Margin="10,122,29,197"/>
+        <Grid x:Name="grid_Books" Margin="207,0,0,0"/>
+        <Button x:Name="btn_Home" Content="Home" HorizontalAlignment="Left" Margin="134,77,0,0" VerticalAlignment="Top" Width="44"/>
+        <Button x:Name="btn_Library" Content="Library" HorizontalAlignment="Left" Margin="134,111,0,0" VerticalAlignment="Top" Width="44"/>
+        <Grid x:Name="grid_Home" Margin="207,0,0,0">
+            <TextBox x:Name="tbx_Student_ID" HorizontalAlignment="Left" Margin="30,74,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="153" IsReadOnly="True"/>
+            <TextBox x:Name="tbx_Student_Surname" HorizontalAlignment="Left" Margin="30,114,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="153" IsReadOnly="True"/>
+            <TextBox x:Name="tbx_Student_FirstName" HorizontalAlignment="Left" Margin="30,152,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="153" IsReadOnly="True"/>
+            <TextBox x:Name="tbx_Student_Course" HorizontalAlignment="Left" Margin="30,193,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="153" IsReadOnly="True"/>
+            <TextBox x:Name="tbx_Student_Email" HorizontalAlignment="Left" Margin="30,231,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="153" IsReadOnly="True"/>
+            <TextBox x:Name="tbx_Student_ContactNo" HorizontalAlignment="Left" Margin="30,268,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="153" IsReadOnly="True"/>
+            <ListBox x:Name="lb_BookTitles" Margin="260,74,35,142" />
+        </Grid>
+
+        <Grid x:Name="grid_Library" Margin="207,0,0,0">
 
         </Grid>
-        <Grid x:Name="grid_Transactions" Margin="207,0,0,0" Visibility="Collapsed">
-
-        </Grid>
-
     </Grid>
 </Window>
