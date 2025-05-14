@@ -46,6 +46,7 @@ namespace NorthvilleLibrary
 
         private void Populate()
         {
+            List<string> booksLb = new List<string>();
             var student = (from u in db.Students
                            where u.Student_Email == studentEmail
                            select u).FirstOrDefault();
@@ -56,13 +57,27 @@ namespace NorthvilleLibrary
             tbx_Student_Course.Text = student.Student_Course_ID;
             tbx_Student_ContactNo.Text = student.Student_ContactNo;
             tbx_Student_Email.Text = student.Student_Email;
-        }
 
-        private void BooksLb()
-        {
-            var student = (from u in db.Students
-                           where u.Student_ID == studentEmail
+            var transaction = (from u in db.Transactions
+                           where u.Transaction_Student_ID == student.Student_ID
                            select u).FirstOrDefault();
-        }
+
+            var borrow = (from u in db.Borrows
+                           where u.Borrow_ID == transaction.Transaction_Borrow_ID
+                           select u).FirstOrDefault();
+
+            var book = (from u in db.Books
+                        where u.Book_ID == borrow.Borrow_Book_ID
+                        select u).FirstOrDefault();
+
+            if (book != null)
+            {
+                booksLb.Add(book.Book_Title);
+            }
+
+            lb_BookTitles.ItemsSource = booksLb;
+        }        
+
+
     }
 }

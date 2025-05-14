@@ -161,25 +161,27 @@ namespace NorthvilleLibrary
             }
         }
 
+        private void DisableThis()
+        {
+            lbx_AllBooks.IsEnabled = false;
+            lbx_AllStudents.IsEnabled = false;
+            lbx_AllTransaction.IsEnabled = false;
+            btn_Student_Grid.IsEnabled = false;
+            btn_Transaction_Borrow_Grid.IsEnabled = false;
+            btn_Book_Grid.IsEnabled = false;
+        }
+
+        bool saveEnabled = false;
         private void Edit_Click(object sender, RoutedEventArgs e)
         {
+            saveEnabled = true;
+            ReadOnlyFalse();
+            DisableThis();
             if (currentGrid == grid_Students)
             {
                 if (selectedStudent != null)
                 {
-                    selectedStudent.Student_ID = tbx_Student_ID.Text;
-                    selectedStudent.Student_Surname = tbx_Student_Surname.Text;
-                    selectedStudent.Student_FirstName = tbx_Student_FirstName.Text;
-                    selectedStudent.Student_Course_ID = tbx_Student_Course_ID.Text;
-                    selectedStudent.Student_ContactNo = tbx_Student_ContactNo.Text;
-                    selectedStudent.Student_Email = tbx_Student_Email.Text;
-                    selectedStudent.Student_Password = tbx_Student_Password.Text;
-
-                    db.SubmitChanges();
-
-                    MessageBox.Show("Student information updated successfully.");
-
-                    PopulateListBox();
+                    btn_Save_Students.Visibility = Visibility.Visible;
                 }
                 else
                     MessageBox.Show("Please select a student to edit.");
@@ -188,50 +190,82 @@ namespace NorthvilleLibrary
             {
                 if (selectedBook != null)
                 {
-                    selectedBook.Book_ID = tbx_Book_ID.Text;
-                    selectedBook.Book_Title = tbx_Book.Text;
-                    selectedBook.Book_Author = tbx_Book_Author.Text;
-                    selectedBook.Book_ISBN = tbx_Book_ISBN.Text;
-                    selectedBook.Book_Publication_Date = DateTime.Parse(tbx_Book_Publication_Date.Text);
-                    selectedBook.Book_Genre = tbx_Book_Genre.Text;
-                    selectedBook.Book_Copies = int.Parse(tbx_Book_Copies.Text);
-
-                    db.SubmitChanges();
-
-                    MessageBox.Show("Book information updated successfully.");
-
-                    PopulateListBox();
+                    tbx_Book_ID.IsReadOnly = true;
+                    btn_Save_Book.Visibility = Visibility.Visible;
                 }
                 else
                     MessageBox.Show("Please select a book to edit.");
             }
             else //WTF IS HAPPENING HERE
             {
-                if (selectedBorrow != null)
-                {
-                    selectedBorrow.Borrow_ID = tbx_Borrow_ID.Text;
-                    selectedBorrow.Borrow_Book_ID = tbx_Borrow_Book_ID.Text;
-                    selectedBorrow.Borrow_Date = DateTime.Parse(tbx_Borrow_Date.Text);
-                    selectedBorrow.Borrow_Due_Date = DateTime.Parse(tbx_Borrow_Due_Date.Text);
-                    selectedBorrow.Borrow_Return_Date = DateTime.Parse(tbx_Borrow_Return_Date.Text);
-                    selectedBorrow.Borrow_Fee = int.Parse(tbx_Borrow_Fee.Text);
-
-                    var transaction = db.Transactions.FirstOrDefault(t => t.Transaction_ID == tbx_Transaction_ID.Text);
-                    if (transaction != null)
-                    {
-                        transaction.Transaction_ID = tbx_Transaction_ID.Text;
-                        transaction.Transaction_Student_ID = tbx_Transaction_Student_ID.Text;
-                    }
-
-                    db.SubmitChanges();
-
-                    MessageBox.Show("Transaction information updated successfully.");
-
-                    PopulateListBox();
-                }
-                else
-                    MessageBox.Show("Please select a transaction to edit.");
+                tbx_Book_ID.IsReadOnly = true;
+                tbx_Borrow_ID.IsReadOnly = true;
+                tbx_Transaction_ID.IsReadOnly = true;
+                tbx_Search_Transaction_ID.IsReadOnly = true;
+                btn_Save_Transaction.Visibility = Visibility.Visible;
             }
+        }
+
+        private void ReadOnlyTrue()
+        {
+            tbx_Book_ID.IsReadOnly = true;
+            tbx_Book.IsReadOnly = true;
+            tbx_Book_Author.IsReadOnly = true;
+            tbx_Book_Copies.IsReadOnly = true;
+            tbx_Book_Genre.IsReadOnly = true;
+            tbx_Book_ISBN.IsReadOnly = true;
+            tbx_Book_Publication_Date.IsReadOnly = true;
+
+            //
+            tbx_Borrow_Book_ID.IsReadOnly = true;
+            tbx_Borrow_Date.IsReadOnly = true;
+            tbx_Borrow_Due_Date.IsReadOnly = true;  
+            tbx_Borrow_Fee.IsReadOnly = true;
+            tbx_Borrow_ID.IsReadOnly = true;
+            tbx_Borrow_Return_Date.IsReadOnly = true;
+            tbx_Transaction_Student_ID.IsReadOnly = true;
+            tbx_Transaction_ID.IsReadOnly = true;
+            tbx_Transaction_Staff_ID.IsReadOnly = true;
+
+            //
+            tbx_Student_ContactNo.IsReadOnly = true;    
+            tbx_Student_Course_ID.IsReadOnly = true;    
+            tbx_Student_Email.IsReadOnly = true;    
+            tbx_Student_FirstName.IsReadOnly = true;
+            tbx_Student_ID.IsReadOnly = true;
+            tbx_Student_Password.IsReadOnly = true;
+            tbx_Student_Surname.IsReadOnly = true;
+
+        }
+
+        private void ReadOnlyFalse()
+        {
+            tbx_Book_ID.IsReadOnly = false;
+            tbx_Book.IsReadOnly = false;
+            tbx_Book_Author.IsReadOnly = false;
+            tbx_Book_Copies.IsReadOnly = false;
+            tbx_Book_Genre.IsReadOnly = false;
+            tbx_Book_ISBN.IsReadOnly = false;
+            tbx_Book_Publication_Date.IsReadOnly = false;
+
+            //
+            tbx_Borrow_Book_ID.IsReadOnly = false;
+            tbx_Borrow_Date.IsReadOnly = false;
+            tbx_Borrow_Due_Date.IsReadOnly = false;
+            tbx_Borrow_Fee.IsReadOnly = false;
+            tbx_Borrow_ID.IsReadOnly = false;
+            tbx_Borrow_Return_Date.IsReadOnly = false;
+            tbx_Transaction_Student_ID.IsReadOnly = false;
+            tbx_Transaction_ID.IsReadOnly = false;
+            tbx_Transaction_Staff_ID.IsReadOnly = false;
+            //
+            tbx_Student_ContactNo.IsReadOnly = false;
+            tbx_Student_Course_ID.IsReadOnly = false;
+            tbx_Student_Email.IsReadOnly = false;
+            tbx_Student_FirstName.IsReadOnly = false;
+            tbx_Student_ID.IsReadOnly = false;
+            tbx_Student_Password.IsReadOnly = false;
+            tbx_Student_Surname.IsReadOnly = false;
         }
 
         private void btn_LogOut_Click(object sender, RoutedEventArgs e)
@@ -319,6 +353,7 @@ namespace NorthvilleLibrary
 
         private void lbx_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            ReadOnlyTrue();
             if (currentGrid == grid_Students)
             {
                 string selectedKey = lbx_AllStudents.SelectedItem as string;
@@ -375,6 +410,7 @@ namespace NorthvilleLibrary
                         tbx_Borrow_Due_Date.Text = selectedBorrow.Borrow_Due_Date.ToString("yyyy-MM-dd");
                         tbx_Borrow_Fee.Text = selectedBorrow.Borrow_Fee.ToString();
 
+
                         if (selectedBorrow.Borrow_Return_Date != null)
                             tbx_Borrow_Return_Date.Text = selectedBorrow.Borrow_Return_Date.ToString();
                         else
@@ -389,6 +425,8 @@ namespace NorthvilleLibrary
                         {
                             tbx_Transaction_ID.Text = selectedTransaction.Transaction_ID;
                             tbx_Transaction_Student_ID.Text = selectedTransaction.Transaction_Student_ID;
+                            tbx_Transaction_Staff_ID.Text = selectedTransaction.Transaction_Staff_ID;
+
                         }
                         else //REMOVE THIS LATER ITS FOR TESTING
                         {
@@ -402,114 +440,27 @@ namespace NorthvilleLibrary
 
         private void Add_Click(object sender, RoutedEventArgs e)
         {
-            if ((string)Add.Content == "Add" || (string)btn_Add_Book.Content == "Add" || (string)btn_Add_Transaction.Content == "Add")
+            DisableThis();
+            ReadOnlyFalse();
+            if (currentGrid == grid_Students)
             {
-                if (currentGrid == grid_Students)
-                {
-                    Add.Content = "Save";
-                    Edit.IsEnabled = false;
-                    Delete.IsEnabled = false;
-                }
-                else if (currentGrid == grid_Books)
-                {
-                    btn_Add_Book.Content = "Save";
-                    btn_Edit_Book.IsEnabled = false;
-                    btn_Delete_Book.IsEnabled = false;
-                }
-                else
-                {
-                    btn_Add_Transaction.Content = "Save";
-                    btn_Edit_Transaction.IsEnabled = false;
-                    btn_Delete_Transaction.IsEnabled = false;
-                }
-
-                ClearTextboxes();
+                btn_Save_Students.Visibility = Visibility.Visible;
+                Edit.IsEnabled = false;
+                Delete.IsEnabled = false;
             }
-            else if ((string)Add.Content == "Save" || (string)btn_Add_Book.Content == "Save" || (string)btn_Add_Transaction.Content == "Save")
+            else if (currentGrid == grid_Books)
             {
-                if (currentGrid == grid_Students)
-                {
-                    if (string.IsNullOrWhiteSpace(tbx_Student_Surname.Text) ||
-                        string.IsNullOrWhiteSpace(tbx_Student_FirstName.Text) ||
-                        string.IsNullOrWhiteSpace(tbx_Student_Course_ID.Text) ||
-                        string.IsNullOrWhiteSpace(tbx_Student_ContactNo.Text) ||
-                        string.IsNullOrWhiteSpace(tbx_Student_Email.Text) ||
-                        string.IsNullOrWhiteSpace(tbx_Student_Password.Text))
-                    {
-                        MessageBox.Show("All student fields must contain a value.");
-                        return;
-                    }
-
-                    var newStudent = new Student
-                    {
-                        Student_ID = tbx_Student_ID.Text,
-                        Student_Surname = tbx_Student_Surname.Text,
-                        Student_FirstName = tbx_Student_FirstName.Text,
-                        Student_Course_ID = tbx_Student_Course_ID.Text,
-                        Student_ContactNo = tbx_Student_ContactNo.Text,
-                        Student_Email = tbx_Student_Email.Text,
-                        Student_Password = tbx_Student_Password.Text
-                    };
-
-                    db.Students.InsertOnSubmit(newStudent);
-                    db.SubmitChanges();
-                    MessageBox.Show("Student added successfully.");
-                }
-                else if (currentGrid == grid_Books)
-                {
-                    if (string.IsNullOrWhiteSpace(tbx_Book.Text) ||
-                        string.IsNullOrWhiteSpace(tbx_Book_Author.Text) ||
-                        string.IsNullOrWhiteSpace(tbx_Book_ISBN.Text) ||
-                        string.IsNullOrWhiteSpace(tbx_Book_Publication_Date.Text) ||
-                        string.IsNullOrWhiteSpace(tbx_Book_Genre.Text) ||
-                        string.IsNullOrWhiteSpace(tbx_Book_Copies.Text))
-                    {
-                        MessageBox.Show("All fields must contain a value.");
-                        return;
-                    }
-
-                    var newBook = new Book
-                    {
-                        Book_ID = tbx_Book_ID.Text,
-                        Book_Title = tbx_Book.Text,
-                        Book_Author = tbx_Book_Author.Text,
-                        Book_ISBN = tbx_Book_ISBN.Text,
-                        Book_Publication_Date = DateTime.Parse(tbx_Book_Publication_Date.Text),
-                        Book_Genre = tbx_Book_Genre.Text,
-                        Book_Copies = int.Parse(tbx_Book_Copies.Text)
-                    };
-
-                    db.Books.InsertOnSubmit(newBook);
-                    db.SubmitChanges();
-                    MessageBox.Show("Book added successfully.");
-                }
-                else if (currentGrid == grid_Transaction_Borrow)
-                {
-                    if (string.IsNullOrWhiteSpace(tbx_Borrow_Book_ID.Text) ||
-                        string.IsNullOrWhiteSpace(tbx_Borrow_Date.Text) ||
-                        string.IsNullOrWhiteSpace(tbx_Borrow_Due_Date.Text) ||
-                        string.IsNullOrWhiteSpace(tbx_Transaction_Student_ID.Text))
-                    {
-                        MessageBox.Show("All transaction fields must contain a value.");
-                        return;
-                    }
-
-                    var newBorrow = new Borrow
-                    {
-
-                    };
-
-                    db.Borrows.InsertOnSubmit(newBorrow);
-                    db.SubmitChanges();
-                    MessageBox.Show("Transaction added successfully.");
-                }
-
-                PopulateListBox();
-                Add.Content = "Add";
-                Edit.IsEnabled = true;
-                Delete.IsEnabled = true;
-                ClearTextboxes();
+                btn_Save_Book.Visibility = Visibility.Visible;
+                btn_Edit_Book.IsEnabled = false;
+                btn_Delete_Book.IsEnabled = false;
             }
+            else
+            {
+                btn_Save_Transaction.Visibility = Visibility.Visible;
+                btn_Edit_Transaction.IsEnabled = false;
+                btn_Delete_Transaction.IsEnabled = false;
+            }
+            ClearTextboxes();
         }
 
         private void Delete_Click(object sender, RoutedEventArgs e)
@@ -590,6 +541,188 @@ namespace NorthvilleLibrary
             grid_Transaction_Borrow.Visibility = Visibility.Visible;
             currentGrid = grid_Transaction_Borrow;
             PopulateListBox();
+        }
+
+        private void btn_Student_Save(object sender, RoutedEventArgs e)
+        {
+            if (saveEnabled)
+            {
+                selectedStudent.Student_ID = tbx_Student_ID.Text;
+                selectedStudent.Student_Surname = tbx_Student_Surname.Text;
+                selectedStudent.Student_FirstName = tbx_Student_FirstName.Text;
+                selectedStudent.Student_Course_ID = tbx_Student_Course_ID.Text;
+                selectedStudent.Student_ContactNo = tbx_Student_ContactNo.Text;
+                selectedStudent.Student_Email = tbx_Student_Email.Text;
+                selectedStudent.Student_Password = tbx_Student_Password.Text;
+                tbx_Student_ID.IsReadOnly = true;
+
+                saveEnabled = false;
+                btn_Save_Students.Visibility = Visibility.Hidden;
+                db.SubmitChanges();
+
+                MessageBox.Show("Student information updated successfully.");
+            }
+            else
+            {
+                if (currentGrid == grid_Students)
+                {
+                    if (string.IsNullOrWhiteSpace(tbx_Student_Surname.Text) ||
+                        string.IsNullOrWhiteSpace(tbx_Student_FirstName.Text) ||
+                        string.IsNullOrWhiteSpace(tbx_Student_Course_ID.Text) ||
+                        string.IsNullOrWhiteSpace(tbx_Student_ContactNo.Text) ||
+                        string.IsNullOrWhiteSpace(tbx_Student_Email.Text) ||
+                        string.IsNullOrWhiteSpace(tbx_Student_Password.Text))
+                    {
+                        MessageBox.Show("All student fields must contain a value.");
+                        return;
+                    }
+
+                    var newStudent = new Student
+                    {
+                        Student_ID = tbx_Student_ID.Text,
+                        Student_Surname = tbx_Student_Surname.Text,
+                        Student_FirstName = tbx_Student_FirstName.Text,
+                        Student_Course_ID = tbx_Student_Course_ID.Text,
+                        Student_ContactNo = tbx_Student_ContactNo.Text,
+                        Student_Email = tbx_Student_Email.Text,
+                        Student_Password = tbx_Student_Password.Text
+                    };
+
+                    db.Students.InsertOnSubmit(newStudent);
+                    db.SubmitChanges();
+                    MessageBox.Show("Student added successfully.");
+                }
+            }
+            PopulateListBox();
+        }
+
+        private void btn_Book_Save_Click(object sender, RoutedEventArgs e)
+        {
+            if (saveEnabled)
+            {
+                selectedBook.Book_ID = tbx_Book_ID.Text;
+                selectedBook.Book_Title = tbx_Book.Text;
+                selectedBook.Book_Author = tbx_Book_Author.Text;
+                selectedBook.Book_ISBN = tbx_Book_ISBN.Text;
+                selectedBook.Book_Publication_Date = DateTime.Parse(tbx_Book_Publication_Date.Text);
+                selectedBook.Book_Genre = tbx_Book_Genre.Text;
+                selectedBook.Book_Copies = int.Parse(tbx_Book_Copies.Text);
+
+                db.SubmitChanges();
+                saveEnabled = false;
+                btn_Save_Book.Visibility = Visibility.Hidden;
+                MessageBox.Show("Book information updated successfully.");
+            }
+            else
+            {
+                if (string.IsNullOrWhiteSpace(tbx_Book.Text) ||
+                        string.IsNullOrWhiteSpace(tbx_Book_Author.Text) ||
+                        string.IsNullOrWhiteSpace(tbx_Book_ISBN.Text) ||
+                        string.IsNullOrWhiteSpace(tbx_Book_Publication_Date.Text) ||
+                        string.IsNullOrWhiteSpace(tbx_Book_Genre.Text) ||
+                        string.IsNullOrWhiteSpace(tbx_Book_Copies.Text))
+                {
+                    MessageBox.Show("All fields must contain a value.");
+                    return;
+                }
+
+                var newBook = new Book
+                {
+                    Book_ID = tbx_Book_ID.Text,
+                    Book_Title = tbx_Book.Text,
+                    Book_Author = tbx_Book_Author.Text,
+                    Book_ISBN = tbx_Book_ISBN.Text,
+                    Book_Publication_Date = DateTime.Parse(tbx_Book_Publication_Date.Text),
+                    Book_Genre = tbx_Book_Genre.Text,
+                    Book_Copies = int.Parse(tbx_Book_Copies.Text)
+                };
+
+                db.Books.InsertOnSubmit(newBook);
+                db.SubmitChanges();
+                MessageBox.Show("Book added successfully.");
+
+                Add.Content = "Add";
+                Edit.IsEnabled = true;
+                Delete.IsEnabled = true;
+                ClearTextboxes();
+            }
+            PopulateListBox();
+        }
+
+        private void btn_Transaction_Save_Click(object sender, RoutedEventArgs e)
+        {
+            if (saveEnabled)
+            {
+                if (selectedBorrow != null)
+                {
+                    selectedBorrow.Borrow_ID = tbx_Borrow_ID.Text;
+                    selectedBorrow.Borrow_Book_ID = tbx_Borrow_Book_ID.Text;
+                    selectedBorrow.Borrow_Date = DateTime.Parse(tbx_Borrow_Date.Text);
+                    selectedBorrow.Borrow_Due_Date = DateTime.Parse(tbx_Borrow_Due_Date.Text);
+                    selectedBorrow.Borrow_Return_Date = DateTime.Parse(tbx_Borrow_Return_Date.Text);
+                    selectedBorrow.Borrow_Fee = int.Parse(tbx_Borrow_Fee.Text);
+
+
+                    var transaction = db.Transactions.FirstOrDefault(t => t.Transaction_ID == tbx_Transaction_ID.Text);
+                    if (transaction != null)
+                    {
+                        transaction.Transaction_ID = tbx_Transaction_ID.Text;
+                        transaction.Transaction_Student_ID = tbx_Transaction_Student_ID.Text;
+                        transaction.Transaction_Staff_ID = tbx_Transaction_Staff_ID.Text;
+                    }
+
+                    MessageBox.Show("Transaction information updated successfully.");
+                    saveEnabled = false;
+                    btn_Save_Transaction.Visibility = Visibility.Hidden;
+                    db.SubmitChanges();
+                }
+                else
+                    MessageBox.Show("Please select a transaction to edit.");
+            }
+            else
+            {
+                if (string.IsNullOrWhiteSpace(tbx_Borrow_Book_ID.Text) ||
+                               string.IsNullOrWhiteSpace(tbx_Borrow_Date.Text) ||
+                               string.IsNullOrWhiteSpace(tbx_Borrow_Due_Date.Text) ||
+                               string.IsNullOrWhiteSpace(tbx_Transaction_Student_ID.Text)
+                               )
+                {
+                    MessageBox.Show("All fields must contain a value.");
+                    return;
+                }
+
+                var newBorrow = new Borrow
+                {
+                    Borrow_ID = tbx_Borrow_ID.Text,
+                    Borrow_Book_ID = tbx_Borrow_Book_ID.Text,
+                    Borrow_Date = DateTime.Parse(tbx_Borrow_Date.Text),
+                    Borrow_Due_Date = DateTime.Parse(tbx_Borrow_Due_Date.Text),
+                    Borrow_Fee = int.TryParse(tbx_Borrow_Fee.Text, out var fee) ? fee : 0
+                };
+
+                db.Borrows.InsertOnSubmit(newBorrow);
+                db.SubmitChanges();
+
+                var newTransaction = new Transaction
+                {
+                    Transaction_ID = tbx_Transaction_ID.Text,
+                    Transaction_Borrow_ID = newBorrow.Borrow_ID,
+                    Transaction_Student_ID = tbx_Transaction_Student_ID.Text,
+                    Transaction_Staff_ID = tbx_Transaction_Staff_ID.Text
+                };
+
+                db.Transactions.InsertOnSubmit(newTransaction);
+                db.SubmitChanges();
+                MessageBox.Show("Transaction added successfully.");
+
+                Add.Content = "Add";
+                Edit.IsEnabled = true;
+                Delete.IsEnabled = true;
+                ClearTextboxes();
+
+            }
+            PopulateListBox();
+
         }
     }
 }
