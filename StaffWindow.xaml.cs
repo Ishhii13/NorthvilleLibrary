@@ -683,6 +683,9 @@ namespace NorthvilleLibrary
                 }
             }
             PopulateListBox();
+            ReadOnlyTrue();
+            EnableThis();
+            ClearTextboxes();
         }
 
         private void btn_Book_Save_Click(object sender, RoutedEventArgs e)
@@ -736,6 +739,9 @@ namespace NorthvilleLibrary
                 ClearTextboxes();
             }
             PopulateListBox();
+            ReadOnlyTrue();
+            EnableThis();
+            ClearTextboxes();
         }
 
         private void btn_Transaction_Save_Click(object sender, RoutedEventArgs e)
@@ -811,7 +817,9 @@ namespace NorthvilleLibrary
 
             }
             PopulateListBox();
-
+            ReadOnlyTrue();
+            EnableThis();
+            ClearTextboxes();
         }
 
         private void btn_Courses_Grid_Click(object sender, RoutedEventArgs e)
