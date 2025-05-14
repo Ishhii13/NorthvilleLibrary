@@ -39,7 +39,9 @@ namespace NorthvilleLibrary
 
         private void btn_Student_Grid_Click(object sender, RoutedEventArgs e)
         {
-            currentGrid.Visibility = Visibility.Collapsed;
+            grid_Books.Visibility = Visibility.Collapsed;
+            grid_Course.Visibility = Visibility.Collapsed;
+            grid_Transaction_Borrow.Visibility = Visibility.Collapsed;
             grid_Students.Visibility = Visibility.Visible;
             currentGrid = grid_Students;
             PopulateListBox();
@@ -618,7 +620,9 @@ namespace NorthvilleLibrary
 
         private void btn_Book_Grid_Click(object sender, RoutedEventArgs e)
         {
-            currentGrid.Visibility = Visibility.Collapsed;
+            grid_Course.Visibility = Visibility.Collapsed;
+            grid_Students.Visibility = Visibility.Collapsed;
+            grid_Transaction_Borrow.Visibility = Visibility.Collapsed;
             grid_Books.Visibility = Visibility.Visible;
             currentGrid = grid_Books;
             PopulateListBox();
@@ -626,7 +630,9 @@ namespace NorthvilleLibrary
 
         private void btn_Transaction_Borrow_Grid_Click(object sender, RoutedEventArgs e)
         {
-            currentGrid.Visibility = Visibility.Collapsed;
+            grid_Books.Visibility = Visibility.Collapsed;
+            grid_Students.Visibility = Visibility.Collapsed;
+            grid_Course.Visibility = Visibility.Collapsed;
             grid_Transaction_Borrow.Visibility = Visibility.Visible;
             currentGrid = grid_Transaction_Borrow;
             PopulateListBox();
@@ -824,7 +830,9 @@ namespace NorthvilleLibrary
 
         private void btn_Courses_Grid_Click(object sender, RoutedEventArgs e)
         {
-            currentGrid.Visibility = Visibility.Collapsed;
+            grid_Books.Visibility = Visibility.Collapsed;
+            grid_Students.Visibility = Visibility.Collapsed;
+            grid_Transaction_Borrow.Visibility = Visibility.Collapsed;
             grid_Course.Visibility = Visibility.Visible;
             currentGrid = grid_Course;
             PopulateListBox();
