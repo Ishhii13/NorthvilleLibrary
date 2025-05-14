@@ -25,6 +25,7 @@ namespace NorthvilleLibrary
         private Book selectedBook;
         private Borrow selectedBorrow;
         private Transaction selectedTransaction;
+        private Course selectedCourse;
         Grid currentGrid;
 
         public StaffWindow(string email)
@@ -166,9 +167,23 @@ namespace NorthvilleLibrary
             lbx_AllBooks.IsEnabled = false;
             lbx_AllStudents.IsEnabled = false;
             lbx_AllTransaction.IsEnabled = false;
+            lbx_AllCourse.IsEnabled = false;
             btn_Student_Grid.IsEnabled = false;
             btn_Transaction_Borrow_Grid.IsEnabled = false;
             btn_Book_Grid.IsEnabled = false;
+            btn_Course_Grid.IsEnabled = false;
+        }
+
+        private void EnableThis()
+        {
+            lbx_AllBooks.IsEnabled = true;
+            lbx_AllStudents.IsEnabled = true;
+            lbx_AllTransaction.IsEnabled = true;
+            lbx_AllCourse.IsEnabled = true;
+            btn_Student_Grid.IsEnabled = true;
+            btn_Transaction_Borrow_Grid.IsEnabled = true;
+            btn_Book_Grid.IsEnabled = true;
+            btn_Course_Grid.IsEnabled = true;
         }
 
         bool saveEnabled = false;
@@ -196,13 +211,22 @@ namespace NorthvilleLibrary
                 else
                     MessageBox.Show("Please select a book to edit.");
             }
-            else //WTF IS HAPPENING HERE
+            else if (currentGrid == grid_Transaction_Borrow)//WTF IS HAPPENING HERE
             {
                 tbx_Book_ID.IsReadOnly = true;
                 tbx_Borrow_ID.IsReadOnly = true;
                 tbx_Transaction_ID.IsReadOnly = true;
                 tbx_Search_Transaction_ID.IsReadOnly = true;
                 btn_Save_Transaction.Visibility = Visibility.Visible;
+            }
+            else if (currentGrid == grid_Course)
+            {
+                if (selectedCourse != null)
+                {
+                    btn_Save_Course.Visibility = Visibility.Visible;
+                }
+                else
+                    MessageBox.Show("Please select a course to edit.");
             }
         }
 
@@ -236,6 +260,9 @@ namespace NorthvilleLibrary
             tbx_Student_Password.IsReadOnly = true;
             tbx_Student_Surname.IsReadOnly = true;
 
+            //
+            tbx_Course_ID.IsReadOnly = true;
+            tbx_Course_Desc.IsReadOnly = true;
         }
 
         private void ReadOnlyFalse()
@@ -266,6 +293,10 @@ namespace NorthvilleLibrary
             tbx_Student_ID.IsReadOnly = false;
             tbx_Student_Password.IsReadOnly = false;
             tbx_Student_Surname.IsReadOnly = false;
+
+            //
+            tbx_Course_Desc.IsReadOnly = false;
+            tbx_Course_ID.IsReadOnly = false;
         }
 
         private void btn_LogOut_Click(object sender, RoutedEventArgs e)
@@ -297,7 +328,7 @@ namespace NorthvilleLibrary
                 tbx_Book_Genre.Text = "";
                 tbx_Book_Copies.Text = "";
             }
-            else
+            else if (currentGrid == grid_Transaction_Borrow)
             {
                 tbx_Borrow_ID.Text = "";
                 tbx_Borrow_Book_ID.Text = "";
@@ -307,6 +338,11 @@ namespace NorthvilleLibrary
                 tbx_Borrow_Fee.Text = "";
                 tbx_Transaction_ID.Text = "";
                 tbx_Transaction_Student_ID.Text = "";
+            }
+            else if (currentGrid == grid_Course)
+            {
+                tbx_Course_Desc.Text = "";
+                tbx_Course_ID.Text = "";
             }
         }
 
@@ -336,7 +372,7 @@ namespace NorthvilleLibrary
                 lbx_AllBooks.ItemsSource = bookTitles.Keys.ToList();
                 lbx_AllBooks.Tag = bookTitles;
             }
-            else //FIX THIS IT'S NOT SHOWING THE RIGHT INFO
+            else if (currentGrid == grid_Transaction_Borrow) //FIX THIS IT'S NOT SHOWING THE RIGHT INFO
             {
                 var borrows = db.Borrows.ToList();
                 var transaction = db.Transactions.ToList();
@@ -348,6 +384,18 @@ namespace NorthvilleLibrary
                 }
                 lbx_AllTransaction.ItemsSource = borrowRecords.Keys.ToList();
                 lbx_AllTransaction.Tag = borrowRecords;
+            }
+            else if (currentGrid == grid_Course)
+            {
+                var courses = db.Courses.ToList();
+                Dictionary<string, Course> courseTitles = new Dictionary<string, Course>();
+                foreach (var course in courses)
+                {
+                    string record = $"{course.Course_Desc}";
+                    courseTitles[record] = course;
+                }
+                lbx_AllCourse.ItemsSource = courseTitles.Keys.ToList();
+                lbx_AllCourse.Tag = courseTitles;
             }
         }
 
@@ -392,7 +440,7 @@ namespace NorthvilleLibrary
                     tbx_Book_Copies.Text = selectedBook.Book_Copies.ToString();
                 }
             }
-            else //Transaction ID and Student ID aren't showing
+            else if (currentGrid == grid_Transaction_Borrow) //Transaction ID and Student ID aren't showing
             {
                 if (currentGrid == grid_Transaction_Borrow)
                 {
@@ -436,6 +484,20 @@ namespace NorthvilleLibrary
                     }
                 }
             }
+            else if (currentGrid == grid_Course)
+            {
+                string selectedKey = lbx_AllCourse.SelectedItem as string;
+                if (selectedKey == null) return;
+
+                var courseInfo = lbx_AllCourse.Tag as Dictionary<string, Course>;
+                if (courseInfo != null && courseInfo.ContainsKey(selectedKey))
+                {
+                    selectedCourse = courseInfo[selectedKey];
+
+                    tbx_Course_ID.Text = selectedCourse.Course_ID;
+                    tbx_Course_Desc.Text = selectedCourse.Course_Desc;
+                }
+            }
         }
 
         private void Add_Click(object sender, RoutedEventArgs e)
@@ -454,11 +516,17 @@ namespace NorthvilleLibrary
                 btn_Edit_Book.IsEnabled = false;
                 btn_Delete_Book.IsEnabled = false;
             }
-            else
+            else if (currentGrid == grid_Transaction_Borrow)
             {
                 btn_Save_Transaction.Visibility = Visibility.Visible;
                 btn_Edit_Transaction.IsEnabled = false;
                 btn_Delete_Transaction.IsEnabled = false;
+            }
+            else if (currentGrid == grid_Course)
+            {
+                btn_Save_Course.Visibility = Visibility.Visible;
+                btn_Edit_Course.IsEnabled = false;
+                btn_Delete_Course.IsEnabled = false;
             }
             ClearTextboxes();
         }
@@ -505,7 +573,7 @@ namespace NorthvilleLibrary
                 else
                     MessageBox.Show("Please select a book to delete.");
             }
-            else
+            else if (currentGrid == grid_Transaction_Borrow)
             {
                 if (selectedBorrow != null)
                 {
@@ -524,6 +592,27 @@ namespace NorthvilleLibrary
                 }
                 else
                     MessageBox.Show("Please select a transaction to delete.");
+            }
+            else if (currentGrid == grid_Course)
+            {
+                if (selectedCourse != null)
+                {
+                    var result = MessageBox.Show("Are you sure you want to delete this course?", "Confirm", MessageBoxButton.YesNo);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        db.Courses.DeleteOnSubmit(selectedCourse);
+                        db.SubmitChanges();
+
+                        MessageBox.Show("Course deleted.");
+                        ClearTextboxes();
+                        PopulateListBox();
+                        selectedCourse = null;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Please select a course to delete.");
+                }
             }
         }
 
@@ -723,6 +812,54 @@ namespace NorthvilleLibrary
             }
             PopulateListBox();
 
+        }
+
+        private void btn_Courses_Grid_Click(object sender, RoutedEventArgs e)
+        {
+            currentGrid.Visibility = Visibility.Collapsed;
+            grid_Course.Visibility = Visibility.Visible;
+            currentGrid = grid_Course;
+            PopulateListBox();
+        }
+
+        private void btn_Course_Save_Click(object sender, RoutedEventArgs e)
+        {
+            if (saveEnabled)
+            {
+                selectedCourse.Course_ID = tbx_Course_ID.Text;
+                selectedCourse.Course_Desc = tbx_Course_Desc.Text;
+
+                db.SubmitChanges();
+                saveEnabled = false;
+                btn_Save_Course.Visibility = Visibility.Hidden;
+                MessageBox.Show("Course information updated successfully.");
+            }
+            else
+            {
+                if (string.IsNullOrWhiteSpace(tbx_Course_ID.Text) ||
+                        string.IsNullOrWhiteSpace(tbx_Course_Desc.Text))
+                {
+                    MessageBox.Show("All fields must contain a value.");
+                    return;
+                }
+
+                var newCourse = new Course
+                {
+                    Course_ID = tbx_Course_ID.Text,
+                    Course_Desc = tbx_Course_Desc.Text,
+                };
+
+                db.Courses.InsertOnSubmit(newCourse);
+                db.SubmitChanges();
+                MessageBox.Show("Course added successfully.");
+                Edit.IsEnabled = true;
+                Delete.IsEnabled = true;
+                ClearTextboxes();
+            }
+            PopulateListBox();
+            ReadOnlyTrue();
+            EnableThis();
+            ClearTextboxes();
         }
     }
 }
